@@ -4,12 +4,12 @@
 %Output wP(Oe)-Freq(GHz) relation and fit slope and intercept.
 
 
-function [fitpara, fitconfint, S12_plot] = Single_Lorentz(x,y,frequency)
+function [fitpara, fitconfint, fig] = Single_Lorentz(x,y,frequency)
 
 
 format long; % set output format as long
-            S12_plot = figure();
-            set(S12_plot, 'Position', [200, 100, 800, 600])
+            fig = figure();
+            set(fig, 'Position', [200, 100, 800, 600])
             set(gcf,'color','w');
             % S12 Real
             subplot(2,1,1);
@@ -70,7 +70,7 @@ format long; % set output format as long
             
             %%% reset the figure and plot with the region just selected. 
             % ==========================================================
-            clf(S12_plot,'reset');
+            clf(fig,'reset');
             hold on;
 
             % S12 Real
