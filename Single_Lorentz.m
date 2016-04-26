@@ -1,3 +1,4 @@
+
 %%%%%%%%%%%%this function basically needs the following data
 %Input x,y = y_real+i*y_imag, frequency(GHz)
 %Output wP(Oe)-Freq(GHz) relation and fit slope and intercept.
@@ -179,7 +180,7 @@ x0_ub = [1,0.5,2*pi,1,1,1,1,1,1,1,1];
 %==================================
 % fit curve by least square non-linear model defined in cplx_fun.m
 % p: fitting parameters
-[p,resnorm,residuals,exitflag,output,lambda,jacobian] = lsqcurvefit(@cplx_fun,st_,xdata,ydata,x0_lb,x0_ub,options);
+[p,resnorm,residuals,exitflag,output,lambda,jacobian] = lsqcurvefit(@Single_Lorentz_fun,st_,xdata,ydata,x0_lb,x0_ub,options);
 
 
 % ==================================
