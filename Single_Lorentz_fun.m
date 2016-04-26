@@ -1,5 +1,5 @@
 % single peak Lorentz profile
-
+% model: 
 function y = Single_Lorentz_fun(p,x)
 
 y = zeros(length(x),2); % allocate yout

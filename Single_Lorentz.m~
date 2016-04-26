@@ -1,5 +1,5 @@
-%%=========================================================================
-%
+
+%% =========================================================================
 % Fit x-y(complex) with Single Lorentzian Model Defined by
 % Single_Lorentz_fun.m
 % p(1):a1	p(2):w  p(3):theta  p(4):x0   p(5):a2
@@ -10,18 +10,17 @@
 % Output Format: w = fitpara(2), Hres(Oe) = fitpara(4)
 % 95% confident interval: 
 % [lw_lb,lw_ub] = [min(fitconfint(2,:)),max(fitconfint(2,:))]
-%
-%%=========================================================================
+%% =========================================================================
+
 % fitpara: fitting parameters; fitconfint: 95% confident intervals; fig:
 % plot figure
-
 function [fitpara, fitconfint, fig] = Single_Lorentz(x,y,frequency)
 
-% set output figure size, position & background
+% set output format as long
+format long; 
 fig = figure();
 set(fig, 'Position', [200, 100, 800, 600])
 set(gcf,'color','w');
-
 % S12 Real
 subplot(2,1,1);
 plot(x,real(y),'ro','markersize',10);
@@ -29,12 +28,6 @@ ylabel('S12 Real','FontSize',36,'FontWeight','bold')
 set(gca,'Fontsize',30,'Linewidth',3,'fontweight','bold');
 set(gca, 'YTickLabel', num2str(get(gca,'YTick')','%1.3e'));
 set(gca, 'XTickLabel', num2str(get(gca,'XTick')','%0.2g'));
-
-deltax = 0.05*(max(x)- min(x));
-xlim([min(x)-deltax,max(x)+deltax]);
-deltay_real = 0.05*(max(real(y))- min(real(y)));
-ylim([min(real(y))-deltay_real,max(real(y))+deltay_real]);
-
 % S12 Imaginary
 subplot(2,1,2);
 plot(x,imag(y),'bs','markersize',10);
@@ -43,25 +36,22 @@ ylabel('S12 Img','FontSize',36,'FontWeight','bold')
 set(gca,'Fontsize',30,'Linewidth',3,'fontweight','bold');
 set(gca, 'YTickLabel', num2str(get(gca,'YTick')','%1.3e'));
 set(gca, 'XTickLabel', num2str(get(gca,'XTick')','%0.2g'));
-
-deltax = 0.05*(max(x)- min(x));
-xlim([min(x)-deltax,max(x)+deltax]);
-deltay_imag = 0.05*(max(imag(y))- min(imag(y)));
-ylim([min(imag(y))-deltay_imag,max(imag(y))+deltay_imag]);
-
-
 % set a common title on the top of the figure
 set(gcf,'NextPlot','add');
 axes; 
 set(gca,'Visible','off'); 
-set(gca,'Fontsize',30,'Linewidth',3);
 h = title(['f = ' num2str(frequency) 'GHz'],'fontsize',40,'fontweight','b');
 set(h,'Visible','on');
                         
-
+% set up the region for plotting
+plotxR=0.1;
+plotyR=0.1;
+            
+xlim([min(x)-plotxR*(max(x)-min(x)) max(x)+plotxR*(max(x)-min(x))]);
+ylim([min(real(y))-plotyR*(max(real(y))-min(real(y))) max(y)+plotyR*(max(y)-min(y))]);
+set(gca,'Fontsize',30,'Linewidth',3);
+title(['f=' num2str(frequency) 'GHz'])
            
-%%=========================================================================
-
 % To select the region for fitting
 fprintf('Click on [LEFT, RIGHT] Region!\n')
 [xleft,~]=ginput(1);
@@ -86,19 +76,17 @@ x=x(setdiff(1:length(x),ind));
 y=y(setdiff(1:length(y),ind));
             
 % reset the figure and plot with the region just selected. 
-%%=========================================================================
+% ==========================================================
 clf(fig,'reset');
 hold on;
 
 % S12 Real
 subplot(2,1,1);
 h1 = plot(x,real(y),'ro','markersize',10);
-
 deltax = 0.05*(max(x)- min(x));
 xlim([min(x)-deltax,max(x)+deltax]);
-deltay_real = 0.05*(max(real(y))- min(real(y)));
+deltay_real = 0.05*(max(imag(y))- min(imag(y)));
 ylim([min(real(y))-deltay_real,max(real(y))+deltay_real]);
-
 ylabel('S12 Real','FontSize',36,'FontWeight','bold') 
 set(gca,'Fontsize',30,'Linewidth',3,'fontweight','bold');
 set(gca, 'YTickLabel', num2str(get(gca,'YTick')','%1.3e'));
@@ -110,12 +98,9 @@ h2 = plot(x,imag(y),'bs','markersize',10);
 xlabel('H(T)','FontSize',36,'FontWeight','bold')
 ylabel('S12 Img','FontSize',36,'FontWeight','bold') 
 set(gca,'Fontsize',30,'Linewidth',3,'fontweight','bold');
-
-deltax = 0.05*(max(x)- min(x));
 xlim([min(x)-deltax,max(x)+deltax]);
 deltay_imag = 0.05*(max(imag(y))- min(imag(y)));
 ylim([min(imag(y))-deltay_imag,max(imag(y))+deltay_imag]);
-
 set(gca, 'YTickLabel', num2str(get(gca,'YTick')','%1.3e'));
 %set(gca, 'XTickLabel', num2str(get(gca,'XTick')','%0.1g'));
 set(gcf,'NextPlot','add');
@@ -174,13 +159,14 @@ st_x0 = xpeak;
 st_a2 = abs(imag(ypeak-yleft))+abs(imag(yright-ypeak));
               
 st_c10 = mean(ydata(:,1));
-st_c11= (ydata(length(x),1)-ydata(1,1))/(xdata(length(x))-xdata(1));
-st_c12 = 0;
+              st_c11= (ydata(length(x),1)-ydata(1,1))/(xdata(length(x))-xdata(1));
+              st_c12 = 0;
               
-st_c20 = mean(ydata(:,2));
-st_c21= (ydata(length(x),2)-ydata(1,2))/(xdata(length(x))-xdata(1));
-st_c22 = 0;
-st_ = [st_a1, st_w, st_theta,st_x0, st_a2, st_c10,st_c11,st_c12,st_c20,st_c21,st_c22];
+              st_c20 = mean(ydata(:,2));
+              st_c21= (ydata(length(x),2)-ydata(1,2))/(xdata(length(x))-xdata(1));
+              st_c22 = 0;
+
+              st_ = [st_a1, st_w, st_theta,st_x0, st_a2, st_c10,st_c11,st_c12,st_c20,st_c21,st_c22];
 %==================================
 % set fitting options
 options = optimset('Tolx',1e-10,'TolFun',1e-10,'DiffMinChange', 1e-10,'MaxIter',15000,'MaxFunEvals',20000);
@@ -205,9 +191,9 @@ subplot(2,1,1);
 h3 = line(xmesh,yfit1,'linewidth',2,'color','r');
 lgd1 = legend([h1,h3],'real','real-fit','location','northeast');
 set(lgd1,'fontsize',14);
+% set(gca, 'YTick', Y, 'YTickLabel', sprintf('%0.3f|', y));
 set(gca, 'YTickLabel', num2str(get(gca,'YTick')','%1.3e'));
 % set(gca, 'XTickLabel', num2str(get(gca,'XTick')','%0.2g'));
-% set(gca, 'YTick', Y, 'YTickLabel', sprintf('%0.3f|', y));
 
 subplot(2,1,2);
 h4 = line(xmesh,yfit2,'linewidth',2,'color','b');
