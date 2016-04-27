@@ -1,5 +1,12 @@
-% single peak Lorentz profile
-% model: 
+%% ========================================================================
+
+% single peak Lorentz profile (Lorentzian)
+% p(1):a1	p(2):w  p(3):theta  p(4):x0   p(5):a2
+% y_real = a1*(w*cos(theta)+(x-x0)*sin(theta))./(w^2+(x-x0).^2)+c1+c2*x+c3*x.^2;
+% y_imag = a2*(w*cos(theta+pi/2)+(x-x0)*sin(theta+pi/2))./(w^2+(x-x0).^2)+c4+c5*x+c6*x.^2;
+
+%% ========================================================================
+
 function y = Single_Lorentz_fun(p,x)
 
 y = zeros(length(x),2); % allocate yout

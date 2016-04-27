@@ -6,10 +6,10 @@
 % y_real = a1*(w*cos(theta)+(x-x0)*sin(theta))./(w^2+(x-x0).^2)+c1+c2*x+c3*x.^2;
 % y_imag = a2*(w*cos(theta+pi/2)+(x-x0)*sin(theta+pi/2))./(w^2+(x-x0).^2)+c4+c5*x+c6*x.^2;
 % Fitting Method: least-square curve fitting
+
 % Input Format: x,y = y_real+i*y_imag, frequency(GHz)
 % Output Format: w = fitpara(2), Hres(Oe) = fitpara(4)
-% 95% confident interval: 
-% [lw_lb,lw_ub] = [min(fitconfint(2,:)),max(fitconfint(2,:))]
+% 95% confident interval: [lw_lb,lw_ub] = [min(fitconfint(2,:)),max(fitconfint(2,:))]
 %
 %%=========================================================================
 % fitpara: fitting parameters; fitconfint: 95% confident intervals; fig:
@@ -17,7 +17,7 @@
 
 function [fitpara, fitconfint, fig] = Single_Lorentz(x,y,frequency)
 
-% set output figure size, position & background
+% set output figure size, position & background color
 fig = figure();
 set(fig, 'Position', [200, 100, 800, 600])
 set(gcf,'color','w');
@@ -57,9 +57,7 @@ set(gca,'Visible','off');
 set(gca,'Fontsize',30,'Linewidth',3);
 h = title(['f = ' num2str(frequency) 'GHz'],'fontsize',40,'fontweight','b');
 set(h,'Visible','on');
-                        
 
-           
 %%=========================================================================
 
 % To select the region for fitting
@@ -76,11 +74,11 @@ end
             
 % Exclude unselected data 
 ind=zeros(length(x),1);
-	for i =1:1:length(x);
-    	if x(i)<xleft || x(i)>xright
+for i =1:1:length(x)
+    if (x(i)<xleft || x(i)>xright)
         	ind(i)=i;
-        end               
-    end
+    end;              
+end;
             
 x=x(setdiff(1:length(x),ind));
 y=y(setdiff(1:length(y),ind));

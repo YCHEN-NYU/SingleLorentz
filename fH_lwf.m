@@ -1,5 +1,6 @@
 % ========================================
-
+% Fit f-Hres & \DeltaH - f data 
+% calculate g-factor, Heff, alpha, \DeltaH0
 % ========================================
 clear;
 close all;

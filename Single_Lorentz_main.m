@@ -2,8 +2,8 @@
 % FMR Data Fitting main function 
 % Author: Yizhang Chen, NYU
 % Contact: yc1224@nyu.edu
+% Fit FMR data with Single Lorentzian Model
 % 
-
 %% ========================================================================
 % clean up existing data & close all open windows
 clear;
@@ -34,9 +34,9 @@ fidout=fopen(outputloc,'a+');
 
 %% ========================================================================
 % starting and ending indices of data files
-i=5;
+i=10;
 % i_end = length(filenames);
-i_end = 5;
+i_end = 11;
 while i<=i_end;
 %% ========================================================================
 
