@@ -3,7 +3,8 @@
 % Author: Yizhang Chen, NYU
 % Contact: yc1224@nyu.edu
 % Fit FMR data with Single Lorentzian Model
-% 
+% Thanks to Yuming Hung with the original version for the fitting
+
 %% ========================================================================
 % clean up existing data & close all open windows
 clear;
@@ -12,7 +13,7 @@ close all;
 %% ========================================================================
 % Give destination folder, outputfile
 cd '/Users/yiyi/Desktop/FMR_dataanalysis/f-H/#21/21_P2N1';
-outputname='fit_parameters2.txt';
+outputname='fit_parameters.txt';
 % Give indices of field(T), S12_real, S12_imag
 indexH = 2;
 indexS12real = 7;

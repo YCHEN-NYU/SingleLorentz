@@ -1,5 +1,5 @@
 %%=========================================================================
-%
+% Thanks to Yuming Hung with the original version for the fitting
 % Fit x-y(complex) with Single Lorentzian Model Defined by
 % Single_Lorentz_fun.m
 % p(1):a1	p(2):w  p(3):theta  p(4):x0   p(5):a2
