@@ -11,8 +11,8 @@ close all;
 
 %% ========================================================================
 % Give destination folder, outputfile
-cd '/Users/yiyi/Desktop/FMR_dataanalysis/f-H/#15/15_P2N1';
-outputname='fit_parameters.txt';
+cd '/Users/yiyi/Desktop/FMR_dataanalysis/f-H/#21/21_P2N1';
+outputname='fit_parameters2.txt';
 % Give indices of field(T), S12_real, S12_imag
 indexH = 2;
 indexS12real = 7;
@@ -23,7 +23,7 @@ indexS12imag = 8;
 %%% read files in the current folder
 folder = pwd;
 % read all data file ended with *MHz.dat in the current folder
-files=dir('*MHz.dat');
+files=dir('*10000MHz.dat');
 % sort out the files in natural order
 [filenames, index] = sort_nat({files.name});
 % open and creat the file for output
@@ -34,9 +34,9 @@ fidout=fopen(outputloc,'a+');
 
 %% ========================================================================
 % starting and ending indices of data files
-i=10;
-% i_end = length(filenames);
-i_end = 11;
+i=1;
+i_end = length(filenames);
+% i_end = 11;
 while i<=i_end;
 %% ========================================================================
 
