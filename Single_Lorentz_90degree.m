@@ -15,7 +15,7 @@
 % fitpara: fitting parameters; fitconfint: 95% confident intervals; fig:
 % plot figure
 
-function [fitpara, fitconfint, fig] = Single_Lorentz(x,y,frequency)
+function [fitpara, fitconfint, fig] = Single_Lorentz_90degree(x,y,frequency)
 
 % set output figure size, position & background color
 fig = figure();
@@ -59,6 +59,7 @@ h = title(['f = ' num2str(frequency) 'GHz'],'fontsize',40,'fontweight','b');
 set(h,'Visible','on');
 
 %%=========================================================================
+
 % To select the region for fitting
 fprintf('Click on [LEFT, RIGHT] Region!\n')
 [xleft,~]=ginput(1);
@@ -198,13 +199,7 @@ xmesh = linspace(min(x),max(x),1000);
 yfit1 = p(1)*(p(2)*cos(p(3))+(xmesh-p(4))*sin(p(3)))./(p(2)^2+(xmesh-p(4)).^2)+p(6)+p(7)*xmesh+p(8)*xmesh.^2;
 yfit2 = p(5)*(p(2)*cos(p(3)+pi/2)+(xmesh-p(4))*sin(p(3)+pi/2))./(p(2)^2+(xmesh-p(4)).^2)++p(9)+p(10)*xmesh+p(11)*xmesh.^2;
 
-Hres_temp=abs(p(4));%%% Change to Oe 
-w_temp=abs(p(2)); % in Oe
-N = 5;
 subplot(2,1,1);
-
-xlim([Hres_temp-N*w_temp, Hres_temp+N*w_temp]);
-
 h3 = line(xmesh,yfit1,'linewidth',2,'color','r');
 lgd1 = legend([h1,h3],'real','real-fit','location','northeast');
 set(lgd1,'fontsize',14);
@@ -213,8 +208,6 @@ set(gca, 'YTickLabel', num2str(get(gca,'YTick')','%1.3e'));
 % set(gca, 'YTick', Y, 'YTickLabel', sprintf('%0.3f|', y));
 
 subplot(2,1,2);
-xlim([Hres_temp-N*w_temp, Hres_temp+N*w_temp]);
-
 h4 = line(xmesh,yfit2,'linewidth',2,'color','b');
 set(gca, 'YTickLabel', num2str(get(gca,'YTick')','%1.3e'));
 % set(gca, 'XTickLabel', num2str(get(gca,'XTick')','%0.2g'));
